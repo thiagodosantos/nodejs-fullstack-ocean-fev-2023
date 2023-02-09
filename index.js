@@ -1,4 +1,15 @@
 const express = require("express");
+const { MongoClient } = require("mongodb");
+
+const DB_URL = "mongodb://localhost:27017";
+const DB_NAME = "nodejs-ocean-fullstack-23";
+
+async function main(){
+// Conexão com o banco de dados
+console.log("Conectando com o banco de dados...");
+const client = MongoClient.connect(DB_URL);
+console.log("Banco de dados conectado com sucesso!");
+
 const app = express();
 
 // O que vier no body da requisição, está em JSON
@@ -41,3 +52,6 @@ app.post("/item", function (req, res) {
 });
 
 app.listen(3000);
+}
+
+main();
