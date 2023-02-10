@@ -1,9 +1,9 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 // localhost ou 127.0.0.1
 const DB_URL = "mongodb://127.0.0.1:27017";
-const DB_NAME = "ocean-bancodados-09-02-2023";
+const DB_NAME = "nodejs-ocean-fullstack-23";
 
 async function main() {
   // Conexão com o banco de dados
@@ -41,19 +41,28 @@ async function main() {
   });
 
   // Endpoint Read Single by ID -> [GET] /item/:id
-  app.get("/item/:id", function (req, res) {
+  app.get("/item/:id", async function (req, res) {
     const id = req.params.id;
-    const item = itens[id - 1];
+    const item = await collection.findOne({ _id: new ObjectId(id) });
     res.send(item);
   });
 
-  // Endpoint Create -> [POST] /item
-  app.post("/item", function (req, res) {
+  // Endpoint Create -> [POST] /item  (LIST)
+  /*app.post("/item", function (req, res) {
     // console.log(req.body);
     const item = req.body;
     itens.push(item.nome);
     res.send("Item criado com sucesso!");
+  });*/
+
+  app.post("/item", async function (req, res) {
+    // console.log(req.body);
+    const item = req.body;
+    await collection.insertOne(item);
+    res.send(item);
   });
+
+
 
   app.listen(3000);
 }
