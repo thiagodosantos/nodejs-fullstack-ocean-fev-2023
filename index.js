@@ -73,10 +73,19 @@ async function main() {
       { _id: new ObjectId(id)},
       { $set: body }
     );
-
+    
     res.send(body);
   });
 
+  app.delete("/item/:id", async function (req, res){
+    const id = req.params.id;
+
+    await collection.deleteOne(
+      { _id: new ObjectId(id)}
+      );
+
+      res.send(" item deletado com sucesso!");
+  });
 
   app.listen(3000);
 }
