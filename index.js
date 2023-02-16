@@ -84,7 +84,7 @@ async function main() {
       { _id: new ObjectId(id)}
       );
 
-      res.send(" item deletado com sucesso!");
+      res.send("Registro removido com sucesso!");
   });
 
   app.listen(3000);
